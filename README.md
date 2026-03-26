@@ -1,6 +1,6 @@
-# liferay-commerce-courses-baseline
+# Integrating with Liferay Commerce
 
-This repository contains the baseline for the Commerce Courses
+This repository contains the baseline for the Integrating with Liferay Commerce that belongs to the Liferay Commerce Developer Learning Path
 
 ## Table of Contents
 
