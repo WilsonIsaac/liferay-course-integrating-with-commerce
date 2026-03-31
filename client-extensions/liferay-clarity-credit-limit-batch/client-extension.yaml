@@ -1,0 +1,16 @@
+assemble:
+    -   from: batch
+        into: batch
+liferay-clarity-credit-limit-batch:
+    name: Liferay Clarity Credit Limit Batch
+    oAuthApplicationHeadlessServer: liferay-clarity-credit-limit-batch-oahs
+    type: batch
+liferay-clarity-credit-limit-batch-oahs:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Clarity Credit Limit Batch OAuth Application Headless Server
+    scopes:
+        -   Liferay.Headless.Admin.Workflow.everything
+        -   Liferay.Headless.Batch.Engine.everything
+        -   Liferay.Object.Admin.REST.everything
+    type: oAuthApplicationHeadlessServer
