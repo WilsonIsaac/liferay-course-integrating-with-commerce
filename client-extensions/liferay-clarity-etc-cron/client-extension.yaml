@@ -1,0 +1,12 @@
+assemble:
+    -   fromTask: bootJar
+liferay-clarity-etc-cron-oahs:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Clarity Etc Cron OAuth Application Headless Server
+    scopes:
+        -   Liferay.Headless.Admin.User.everything.read
+        -   Liferay.Headless.Delivery.everything
+        -   Liferay.Headless.Batch.Engine.everything
+        -   Liferay.Headless.Commerce.Admin.Catalog.everything
+    type: oAuthApplicationHeadlessServer
