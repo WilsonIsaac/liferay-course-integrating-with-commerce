@@ -74,7 +74,7 @@ public class ErpOperationsController extends BaseRestController {
 			JsonNode rootNode = objectMapper.readTree(result);
 
 			// Extract the totalWithTaxAmountFormatted attribute
-			String liferayTotal = rootNode.path("totalWithTaxAmountFormatted").asText() + 1;
+			String liferayTotal = rootNode.path("totalWithTaxAmountFormatted").asText();
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Comparison -> Liferay: [" + liferayTotal + "] vs Provided: [" + totalValue + "]");
