@@ -47,14 +47,15 @@ public class ClarityExchangeRateProvider implements ExchangeRateProvider {
 
         try {
             // We use the Frankfurter API (free, no key required for basic usage)
-            // Endpoint: https://api.frankfurter.app/latest?from=USD&to=EUR
+            // Endpoint: https://api.frankfurter.dev/v1/latest?from=USD&to=EUR
             String url = String.format(
-                "https://api.frankfurter.app/latest?from=%s&to=%s",
+                "https://api.frankfurter.dev/v1/latest?from=%s&to=%s",
                 baseCurrencyCode,
                 targetCurrencyCode
             );
 
             HttpClient client = HttpClient.newBuilder()
+                .followRedirects(HttpClient.Redirect.NORMAL)
                 .connectTimeout(Duration.ofSeconds(5))
                 .build();
 
@@ -66,8 +67,8 @@ public class ClarityExchangeRateProvider implements ExchangeRateProvider {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200) {
-                if (_log.isDebugEnabled()) {
-                    _log.debug("Received API response: " + response.body());
+                if (_log.isInfoEnabled()) {
+                    _log.info("Received API response: " + response.body());
                 }
 
                 JSONObject jsonObject = JSONFactoryUtil.createJSONObject(response.body());
@@ -76,15 +77,21 @@ public class ClarityExchangeRateProvider implements ExchangeRateProvider {
                 if (rates != null && rates.has(targetCurrencyCode)) {
                     double rateValue = rates.getDouble(targetCurrencyCode);
                     
-                    if (_log.isDebugEnabled()) {
-                        _log.debug(String.format("Conversion: 1 %s = %f %s", baseCurrencyCode, rateValue, targetCurrencyCode));
+                    if (_log.isInfoEnabled()) {
+                        _log.info(String.format("Conversion: 1 %s = %f %s", baseCurrencyCode, rateValue, targetCurrencyCode));
                     }
                     
                     return new BigDecimal(rateValue);
                 }
             } else {
                 if (_log.isWarnEnabled()) {
-                    _log.warn("API returned non-200 status: " + response.statusCode());
+                    _log.warn(String.format(
+                        "API returned non-200 status: %d for conversion %s -> %s (URL: %s)", 
+                        response.statusCode(), 
+                        baseCurrencyCode, 
+                        targetCurrencyCode,
+                        url
+                    ));
                 }
             }
 
