@@ -1,0 +1,13 @@
+assemble:
+    -   fromTask: bootJar
+liferay-clarity-etc-spring-boot-oaua:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Clarity Etc Spring Boot OAuth Application User Agent
+    scopes:
+        -   Liferay.Headless.Commerce.Admin.Order.everything.read
+        -   Liferay.Headless.Commerce.Admin.Order.everything
+        -   Liferay.Headless.Commerce.Admin.Order.everything.write
+    type: oAuthApplicationUserAgent
+
+
